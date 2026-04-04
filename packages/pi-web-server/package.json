@@ -1,0 +1,31 @@
+{
+	"name": "@mariozechner/pi-web-server",
+	"version": "0.1.0",
+	"description": "WebSocket bridge server connecting browser to pi-coding-agent RPC backend",
+	"type": "module",
+	"private": true,
+	"main": "./dist/server.js",
+	"scripts": {
+		"build:server": "tsc",
+		"build:frontend": "vite build",
+		"build": "npm run build:server && npm run build:frontend",
+		"dev": "node dist/server.js",
+		"start": "./scripts/start.sh"
+	},
+	"dependencies": {
+		"ws": "^8.18.0"
+	},
+	"devDependencies": {
+		"@mariozechner/mini-lit": "^0.2.0",
+		"@mariozechner/pi-agent-core": "^0.61.1",
+		"@mariozechner/pi-ai": "^0.61.1",
+		"@mariozechner/pi-web-ui": "^0.61.1",
+		"@tailwindcss/vite": "^4.1.17",
+		"@types/node": "^22.10.5",
+		"@types/ws": "^8.5.14",
+		"lit": "^3.3.1",
+		"lucide": "^0.544.0",
+		"typescript": "^5.7.3",
+		"vite": "^7.1.6"
+	}
+}

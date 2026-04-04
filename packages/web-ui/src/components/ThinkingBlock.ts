@@ -28,15 +28,26 @@ export class ThinkingBlock extends LitElement {
 			: "";
 
 		return html`
-			<div class="thinking-block">
-				<div
-					class="thinking-header cursor-pointer select-none flex items-center gap-2 py-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+			<div class="thinking-block mx-4 rounded-xl border border-border bg-card/80 px-4 py-3 shadow-xs">
+				<button
+					type="button"
+					class="flex w-full items-center gap-2 text-left text-sm text-muted-foreground hover:text-foreground transition-colors"
+					aria-expanded=${this.isExpanded ? "true" : "false"}
 					@click=${this.toggleExpanded}
 				>
-					<span class="transition-transform inline-block ${this.isExpanded ? "rotate-90" : ""}">${icon(ChevronRight, "sm")}</span>
-					<span class="${shimmerClasses}">Thinking...</span>
-				</div>
-				${this.isExpanded ? html`<markdown-block .content=${this.content} .isThinking=${true}></markdown-block>` : ""}
+					<span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-muted text-muted-foreground transition-transform ${this.isExpanded ? "rotate-90" : ""}">${icon(ChevronRight, "sm")}</span>
+					<span class="text-[11px] font-semibold uppercase tracking-[0.18em]">Thinking</span>
+					<span class="${shimmerClasses} text-[11px] uppercase tracking-[0.18em]">${this.isStreaming ? "streaming" : this.isExpanded ? "expanded" : "collapsed"}</span>
+				</button>
+				${
+					this.isExpanded
+						? html`
+							<div class="mt-3 rounded-lg border border-border bg-background/80 p-3 text-sm leading-relaxed text-foreground">
+								<markdown-block .content=${this.content} .isThinking=${true}></markdown-block>
+							</div>
+						`
+						: ""
+				}
 			</div>
 		`;
 	}

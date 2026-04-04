@@ -3,10 +3,24 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="color-scheme" content="dark light" />
 		<title>Pi Web UI - Example</title>
 		<meta name="description" content="Example usage of @mariozechner/pi-web-ui - Reusable AI chat interface" />
+		<script>
+			(() => {
+				try {
+					if (!localStorage.getItem("theme")) {
+						localStorage.setItem("theme", "dark");
+					}
+					const theme = localStorage.getItem("theme") || "dark";
+					document.documentElement.classList.toggle("dark", theme === "dark");
+				} catch {
+					document.documentElement.classList.add("dark");
+				}
+			})();
+		</script>
 	</head>
-	<body class="bg-background">
+	<body class="bg-background text-foreground">
 		<div id="app"></div>
 		<script type="module" src="/src/main.ts"></script>
 	</body>

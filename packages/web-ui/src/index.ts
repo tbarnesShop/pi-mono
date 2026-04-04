@@ -13,7 +13,12 @@ export { Input } from "./components/Input.js";
 export { MessageEditor } from "./components/MessageEditor.js";
 export { MessageList } from "./components/MessageList.js";
 // Message components
-export type { ArtifactMessage, UserMessageWithAttachments } from "./components/Messages.js";
+export type {
+	ArtifactMessage,
+	BranchSummaryMessage,
+	CompactionSummaryMessage,
+	UserMessageWithAttachments,
+} from "./components/Messages.js";
 export {
 	AbortedMessage,
 	AssistantMessage,

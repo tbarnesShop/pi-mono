@@ -1,3 +1,4 @@
+import type { AgentTool } from "@mariozechner/pi-agent-core";
 import type {
 	AssistantMessage as AssistantMessageType,
 	ImageContent,
@@ -12,8 +13,8 @@ import { renderTool } from "../tools/index.js";
 import type { Attachment } from "../utils/attachment-utils.js";
 import { formatUsage } from "../utils/format.js";
 import { i18n } from "../utils/i18n.js";
+import { registerMessageRenderer } from "./message-renderer-registry.js";
 import "./ThinkingBlock.js";
-import type { AgentTool } from "@mariozechner/pi-agent-core";
 
 export type UserMessageWithAttachments = {
 	role: "user-with-attachments";
@@ -32,10 +33,26 @@ export interface ArtifactMessage {
 	timestamp: string;
 }
 
+export interface BranchSummaryMessage {
+	role: "branchSummary";
+	summary: string;
+	fromId: string;
+	timestamp: number;
+}
+
+export interface CompactionSummaryMessage {
+	role: "compactionSummary";
+	summary: string;
+	tokensBefore: number;
+	timestamp: number;
+}
+
 declare module "@mariozechner/pi-agent-core" {
 	interface CustomAgentMessages {
 		"user-with-attachments": UserMessageWithAttachments;
 		artifact: ArtifactMessage;
+		branchSummary: BranchSummaryMessage;
+		compactionSummary: CompactionSummaryMessage;
 	}
 }
 
@@ -291,6 +308,39 @@ export class AbortedMessage extends LitElement {
 		return html`<span class="text-sm text-destructive italic">${i18n("Request aborted")}</span>`;
 	}
 }
+
+registerMessageRenderer("branchSummary", {
+	render(message) {
+		const sourceLabel = message.fromId === "root" ? "root" : message.fromId;
+		return html`
+			<div class="mx-4 rounded-xl border border-border bg-card/80 px-4 py-3 shadow-xs">
+				<div class="flex items-center justify-between gap-3 text-xs uppercase tracking-[0.16em] text-muted-foreground">
+					<span>Branch summary</span>
+					<span>from ${sourceLabel}</span>
+				</div>
+				<div class="mt-2 text-sm text-foreground leading-relaxed">
+					<markdown-block .content=${message.summary}></markdown-block>
+				</div>
+			</div>
+		`;
+	},
+});
+
+registerMessageRenderer("compactionSummary", {
+	render(message) {
+		return html`
+			<div class="mx-4 rounded-xl border border-border bg-card/80 px-4 py-3 shadow-xs">
+				<div class="flex items-center justify-between gap-3 text-xs uppercase tracking-[0.16em] text-muted-foreground">
+					<span>Compaction boundary</span>
+					<span>${message.tokensBefore.toLocaleString()} tokens</span>
+				</div>
+				<div class="mt-2 text-sm text-foreground leading-relaxed">
+					<markdown-block .content=${message.summary}></markdown-block>
+				</div>
+			</div>
+		`;
+	},
+});
 
 // ============================================================================
 // Default Message Transformer

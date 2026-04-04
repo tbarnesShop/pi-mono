@@ -1,0 +1,36 @@
+@import "@mariozechner/pi-web-ui/app.css";
+
+/* =============================================================
+   Pi web server overrides — icons-only bottom toolbar
+   ============================================================= */
+
+/* 1. Hide the model name text in the model selector button */
+message-editor span.ml-1 {
+  display: none !important;
+}
+
+/* 2. Hide the thinking level label text; keep the brain icon + dropdown arrow.
+      The Select trigger renders:
+        <button role="combobox">
+          <span class="flex items-center gap-2 truncate">
+            <span class="flex-shrink-0"><!-- Brain SVG --></span>
+            Medium   ← text node to hide
+          </span>
+          <svg ...><!-- chevron --></svg>
+        </button>
+      Setting font-size: 0 on the truncate span collapses the bare text node to
+      zero height. The Brain icon SVG has explicit h-4/w-4 px dimensions and is
+      unaffected. The chevron SVG is a direct child of the button, not affected. */
+message-editor button[role="combobox"] span.truncate {
+  font-size: 0 !important;
+  gap: 0 !important;
+}
+
+/* Remove the inline min-width: 80px set by the Select component so the button
+   shrinks to icon-only width. */
+message-editor button[role="combobox"] {
+  min-width: unset !important;
+  width: auto !important;
+  padding-left: 0.375rem !important;
+  padding-right: 0.375rem !important;
+}
