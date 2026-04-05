@@ -5,7 +5,8 @@
   "description": "Web UI bridge for the pi coding agent",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "PORT=8484 node src/server.js"
+    "dev": "PORT=8484 node src/server.js",
+    "build:ui": "npm run build --prefix ../web-ui && npm run build --prefix ../web-ui/example && shx mkdir -p dist/public && shx cp -r ../web-ui/example/dist/. dist/public/"
   },
   "dependencies": {
     "ws": "^8.0.0"
