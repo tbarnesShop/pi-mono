@@ -1,0 +1,16 @@
+{
+  "name": "pi-web-server",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Web UI bridge for the pi coding agent",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "PORT=8484 node src/server.js"
+  },
+  "dependencies": {
+    "ws": "^8.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
