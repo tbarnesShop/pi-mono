@@ -376,15 +376,13 @@ export class AgentInterface extends LitElement {
 								if (this.onModelSelect) {
 									this.onModelSelect();
 								} else {
-									ModelSelector.open(state.model, (model) => {
-										session.state.model = model;
-									});
+									ModelSelector.open(state.model, (model) => session.setModel(model));
 								}
 							}}
 							.onThinkingChange=${
 								this.enableThinkingSelector
 									? (level: "off" | "minimal" | "low" | "medium" | "high") => {
-											session.state.thinkingLevel = level;
+											session.setThinkingLevel(level);
 										}
 									: undefined
 							}

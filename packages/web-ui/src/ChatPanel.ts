@@ -141,7 +141,7 @@ export class ChatPanel extends LitElement {
 		const additionalTools =
 			config?.toolsFactory?.(agent, this.agentInterface, this.artifactsPanel, runtimeProvidersFactory) || [];
 		const tools = [this.artifactsPanel.tool, ...additionalTools];
-		this.agent.state.tools = tools;
+		this.agent.setTools(tools);
 
 		// Reconstruct artifacts from existing messages
 		// Temporarily disable the onArtifactsChange callback to prevent auto-opening on load
